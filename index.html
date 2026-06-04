@@ -1,78 +1,1192 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>李建華｜個人品牌官網</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:#f4f6f9;color:#222}
-header{background:linear-gradient(135deg,#1f4e79,#3d7fb3);color:#fff;padding:80px 20px;text-align:center}
-nav{background:#fff;padding:12px;text-align:center;position:sticky;top:0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-nav a{margin:0 15px;text-decoration:none;color:#1f4e79;font-weight:bold}
-section{max-width:1000px;margin:30px auto;padding:30px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.timeline li{margin:12px 0}
-.card{padding:16px;border-left:4px solid #1f4e79;background:#f8fbff;margin:12px 0}
-footer{text-align:center;padding:30px;color:#666}
+/* =====================
+   CSS Variables
+===================== */
+:root {
+  --ink: #1a1410;
+  --ink-light: #4a3f35;
+  --ink-faint: #8a7a6a;
+  --paper: #faf7f2;
+  --paper-warm: #f2ece1;
+  --paper-deep: #e8dfd0;
+  --red: #c0392b;
+  --red-deep: #962d22;
+  --gold: #b8962e;
+  --gold-light: #d4b354;
+  --blue-ink: #1f3a5f;
+  --blue-mid: #2d5f8a;
+  --white: #fffef9;
+  --shadow-soft: 0 4px 24px rgba(26,20,16,.08);
+  --shadow-mid: 0 8px 40px rgba(26,20,16,.14);
+  --shadow-deep: 0 20px 60px rgba(26,20,16,.20);
+  --radius: 2px;
+  --font-display: 'Playfair Display', 'Noto Serif TC', serif;
+  --font-serif: 'Noto Serif TC', serif;
+  --font-sans: 'Noto Sans TC', sans-serif;
+}
+
+/* =====================
+   Reset & Base
+===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-serif);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+
+/* =====================
+   Scrollbar
+===================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--paper-warm); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* =====================
+   Noise Texture Overlay
+===================== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .4;
+}
+
+/* =====================
+   Navigation
+===================== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250,247,242,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(184,150,46,.2);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  transition: box-shadow .3s;
+}
+
+nav.scrolled { box-shadow: var(--shadow-soft); }
+
+.nav-brand {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+  letter-spacing: .15em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-brand::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-light);
+  font-family: var(--font-sans);
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* =====================
+   Hero
+===================== */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  background: var(--blue-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 64px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,150,46,.15) 0%, transparent 70%);
+}
+
+.hero-left::after {
+  content: '文';
+  position: absolute;
+  bottom: -40px; left: -20px;
+  font-family: var(--font-serif);
+  font-size: 240px;
+  font-weight: 900;
+  color: rgba(255,255,255,.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .25em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--gold-light);
+}
+
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+
+.hero-name-alias {
+  font-family: var(--font-sans);
+  font-size: .85rem;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .12em;
+  margin-bottom: 32px;
+}
+
+.hero-desc {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.9;
+  max-width: 360px;
+  border-left: 2px solid var(--gold);
+  padding-left: 20px;
+  font-style: italic;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.hero-tag {
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  color: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: .06em;
+}
+
+.hero-right {
+  background: var(--paper-warm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 64px 80px;
+  position: relative;
+}
+
+.hero-portrait-wrap {
+  position: relative;
+  width: 280px;
+  height: 340px;
+}
+
+.hero-portrait-wrap::before {
+  content: '';
+  position: absolute;
+  top: 16px; left: 16px;
+  right: -16px; bottom: -16px;
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+}
+
+.hero-portrait {
+  position: relative;
+  z-index: 1;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+  background: var(--paper-deep);
+}
+
+/* Fallback when image not found */
+.hero-portrait-placeholder {
+  position: relative;
+  z-index: 1;
+  width: 280px; height: 340px;
+  background: linear-gradient(160deg, var(--paper-deep), var(--paper-warm));
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  color: var(--gold);
+}
+
+.hero-caption {
+  margin-top: 28px;
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  color: var(--ink-faint);
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-faint);
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  animation: float 2s ease-in-out infinite;
+}
+
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--ink-faint), transparent);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* =====================
+   Section Base
+===================== */
+.section {
+  padding: 100px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--paper-deep);
+  line-height: 1;
+  user-select: none;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: .06em;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 40px; height: 3px;
+  background: var(--gold);
+  margin-top: 8px;
+}
+
+/* =====================
+   About Section
+===================== */
+#about { background: var(--white); }
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  color: var(--ink-light);
+  line-height: 2;
+  margin-bottom: 16px;
+}
+
+.about-highlight {
+  background: var(--blue-ink);
+  color: var(--white);
+  padding: 32px;
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-highlight::before {
+  content: '"';
+  position: absolute;
+  top: -10px; left: 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 100px;
+  color: rgba(255,255,255,.08);
+  line-height: 1;
+}
+
+.about-highlight p {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.9;
+  position: relative;
+  z-index: 1;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.info-item {
+  padding: 16px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--gold);
+}
+
+.info-label {
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  color: var(--ink-faint);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.info-val {
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* =====================
+   Works Section
+===================== */
+#works {
+  background: var(--paper-warm);
+  padding: 100px 0;
+}
+
+#works .section { max-width: 1100px; }
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.work-category {
+  background: var(--white);
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s;
+}
+
+.work-category:hover { transform: translateY(-4px); box-shadow: var(--shadow-mid); z-index: 2; }
+
+.work-category::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+
+.work-cat-label {
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  letter-spacing: .2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.work-cat-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--paper-deep);
+}
+
+.work-list {
+  list-style: none;
+}
+
+.work-list li {
+  font-family: var(--font-serif);
+  font-size: .92rem;
+  color: var(--ink-light);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--paper-warm);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.work-list li:last-child { border-bottom: none; }
+
+.work-year {
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.work-footnote {
+  grid-column: 1 / -1;
+  background: var(--blue-ink);
+  padding: 20px 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-size: .85rem;
+  color: rgba(255,255,255,.75);
+}
+
+.work-footnote a {
+  color: var(--gold-light);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212,179,84,.3);
+  transition: border-color .2s;
+}
+
+.work-footnote a:hover { border-color: var(--gold-light); }
+
+/* =====================
+   Timeline Section
+===================== */
+#timeline { background: var(--white); }
+
+.timeline-track {
+  position: relative;
+  padding-left: 60px;
+}
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  left: 20px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), var(--paper-deep));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity .5s, transform .5s;
+}
+
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+.timeline-dot {
+  position: absolute;
+  left: -47px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--gold);
+  transition: background .3s;
+}
+
+.timeline-item:hover .timeline-dot { background: var(--gold); }
+
+.timeline-date {
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+
+.timeline-content {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  border-left: 3px solid transparent;
+  transition: border-color .3s, box-shadow .3s;
+}
+
+.timeline-item:hover .timeline-content {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-soft);
+}
+
+.timeline-text {
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  color: var(--ink-light);
+  line-height: 1.7;
+}
+
+/* =====================
+   Advantage Section
+===================== */
+#advantage { background: var(--paper-warm); padding: 100px 40px; }
+
+.adv-cards {
+  display: grid;
+  gap: 32px;
+}
+
+.adv-card {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 0;
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow .3s;
+}
+
+.adv-card:hover { box-shadow: var(--shadow-mid); }
+
+.adv-card:nth-child(even) { grid-template-columns: 1fr 300px; }
+.adv-card:nth-child(even) .adv-img-wrap { order: 2; }
+.adv-card:nth-child(even) .adv-body { order: 1; }
+
+.adv-img-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-deep);
+  min-height: 220px;
+}
+
+.adv-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+  display: block;
+}
+
+.adv-card:hover .adv-img-wrap img { transform: scale(1.04); }
+
+.adv-img-label {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  background: rgba(26,20,16,.7);
+  color: rgba(255,255,255,.85);
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.adv-body {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.adv-icon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.adv-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adv-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--paper-deep);
+}
+
+.adv-desc {
+  font-family: var(--font-serif);
+  font-size: .92rem;
+  color: var(--ink-light);
+  line-height: 2;
+}
+
+/* =====================
+   Contact Section
+===================== */
+#contact {
+  background: var(--blue-ink);
+  padding: 100px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+#contact::before {
+  content: '聯';
+  position: absolute;
+  right: -60px; bottom: -60px;
+  font-family: var(--font-serif);
+  font-size: 400px;
+  font-weight: 900;
+  color: rgba(255,255,255,.02);
+  line-height: 1;
+  user-select: none;
+}
+
+#contact .section {
+  max-width: 800px;
+  padding: 0;
+}
+
+#contact .section-num { color: rgba(255,255,255,.06); }
+#contact .section-title { color: var(--white); }
+#contact .section-title::after { background: var(--gold); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.contact-item {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: background .3s, border-color .3s;
+}
+
+.contact-item:hover {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(184,150,46,.4);
+}
+
+.contact-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(184,150,46,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  color: rgba(255,255,255,.4);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.contact-val {
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  color: var(--white);
+}
+
+.contact-val a {
+  color: var(--gold-light);
+  text-decoration: none;
+}
+
+/* =====================
+   Footer
+===================== */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,.3);
+  text-align: center;
+  padding: 32px;
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  letter-spacing: .1em;
+}
+
+footer span { color: var(--gold); }
+
+/* =====================
+   Divider
+===================== */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 0;
+}
+
+/* =====================
+   Animations
+===================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* stagger children */
+.stagger > *:nth-child(1) { transition-delay: .05s; }
+.stagger > *:nth-child(2) { transition-delay: .12s; }
+.stagger > *:nth-child(3) { transition-delay: .20s; }
+.stagger > *:nth-child(4) { transition-delay: .28s; }
+.stagger > *:nth-child(5) { transition-delay: .36s; }
+
+/* =====================
+   Hero load animation
+===================== */
+.hero-left > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroIn .7s ease forwards;
+}
+.hero-eyebrow { animation-delay: .2s; }
+.hero-name { animation-delay: .35s; }
+.hero-name-alias { animation-delay: .45s; }
+.hero-desc { animation-delay: .55s; }
+.hero-tags { animation-delay: .65s; }
+
+.hero-portrait-wrap {
+  opacity: 0;
+  animation: heroIn .8s ease .5s forwards;
+}
+
+@keyframes heroIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================
+   Responsive
+===================== */
+@media (max-width: 900px) {
+  #hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 120px 32px 60px; }
+  .hero-right { padding: 40px 32px 60px; }
+
+  .about-inner { grid-template-columns: 1fr; }
+  .works-grid { grid-template-columns: 1fr; }
+  .adv-card { grid-template-columns: 1fr !important; }
+  .adv-card:nth-child(even) .adv-img-wrap { order: 0; }
+  .adv-card:nth-child(even) .adv-body { order: 0; }
+  .adv-img-wrap { min-height: 200px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  nav { padding: 0 20px; }
+  .nav-links { gap: 16px; }
+  .section { padding: 60px 24px; }
+}
+
+@media (max-width: 600px) {
+  .hero-name { font-size: 2.8rem; }
+  .nav-links a { font-size: .75rem; }
+  .info-grid { grid-template-columns: 1fr; }
+  .section-num { font-size: 2.5rem; }
+  .section-title { font-size: 1.5rem; }
+}
 </style>
 </head>
 <body>
-<header>
-<h1>李建華（化名）</h1>
-<p>別名：李毛、李迅、李茂、李師從</p>
-</header>
 
-<nav>
-<a href="#about">關於我</a>
-<a href="#works">作品</a>
-<a href="#timeline">履歷</a>
-<a href="#advantage">核心優勢</a>
-<a href="#contact">聯絡我</a>
+<!-- Navigation -->
+<nav id="navbar">
+  <a class="nav-brand" href="#hero">李建華</a>
+  <ul class="nav-links">
+    <li><a href="#about">關於</a></li>
+    <li><a href="#works">作品</a></li>
+    <li><a href="#timeline">履歷</a></li>
+    <li><a href="#advantage">優勢</a></li>
+    <li><a href="#contact">聯絡</a></li>
+  </ul>
 </nav>
 
-<section id="about">
-<h2>關於我</h2>
-<p>李建華（化名），96年3月23日出生於廣西省百色地區奉議縣，現就讀於華南理工大學電力學院</p>
-<img src="mmexport1780029567667.jpeg" alt="官方照相（拍攝於115年5月28日）" width="300" style="display: block; margin: 0 auto;">
-<section id="works">
-<h2>代表作</h2>
-<div class="card">小説：《12.14》（110年）、《振中路》（114年）、《裂縫之下——復仇三部曲》（114年）、《三月三與三角梅》（115年）、《外翻》（115年）</div>
-<div class="card">詩詞：《國旗班》（107年）、《鷓鴣天·地生中考》（110年）、《感懷》（111年）、《三月三懷鄉》（115年）</div>
-<div class="card">詳見微信公衆號“振中路7號”</div>
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Personal Brand</div>
+    <h1 class="hero-name">李建華</h1>
+    <p class="hero-name-alias">李毛　李迅　李茂　李師從</p>
+    <p class="hero-desc">以文字為器，記錄時代，書寫自我——<br>作家、書法家、訪談人</p>
+    <div class="hero-tags">
+      <span class="hero-tag">華南理工大學</span>
+      <span class="hero-tag">電力學院</span>
+      <span class="hero-tag">文學創作</span>
+      <span class="hero-tag">硬筆書法</span>
+      <span class="hero-tag">廣西百色</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-portrait-wrap">
+      <img class="hero-portrait" src="mmexport1780029567667.jpeg" alt="李建華官方照相（攝於115年5月28日）"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="hero-portrait-placeholder" style="display:none">李</div>
+    </div>
+    <p class="hero-caption">攝於115年5月28日</p>
+  </div>
+  <div class="scroll-hint" style="grid-column:1/-1">SCROLL</div>
 </section>
 
-<section id="timeline">
-<h2>履歷</h2>
-<ul class="timeline">
-<li>109.9——加入1901四人幫</li>
-<li>110.5——擔任1901四人幫幫主</li>
-<li>111.7——成立中國社會仔革命委員會，並出任中央執行委員會主席</li>
-<li>113.7——卸任會革中央主席，出任宣傳部部長，並創立《會革中央報》</li>
-<li>114.8——創立微信公衆號</li>
-<li>115.5——建立個人官網</li>
-</ul>
-</section>
+<div class="divider"></div>
 
-<section id="advantage">
-<h2>核心優勢</h2>
-<div class="card">國文水平高超</div>
-<p>106年至115年任國文科代表，橫跨國小、國中、高中三時期:國小時期國文取得三次滿分，國中時期在120分制下3破115大關，最高分118.5，破20年當地記錄並保持至今; 高中時期在150分制下10破130大關，高考國文以139分冠絕全校</p>
-<img src="qq_pic_merged_1780321617501.jpg" alt="國文高考成績" width="300" style="display: block; margin: 0 auto;">
-<div class="card">硬筆書法精熟</div>
-<p>自幼練習，曉暢古帖，創造性融合古人筆法與硬筆特色，形成個人風格，書風柔中帶剛，尤精楷、行書體</p>
-<img src="Image_1780322159404_44.jpg" alt="行書作品" width="300" style="display: block; margin: 0 auto;">
-<div class="card">訪談水平高超</div>
-<p>曾任節能減排競賽校賽訪談項目負責人，長於撰寫訪談大綱及訪談紀要，亦有臨場發揮現場訪談之能</p>
-<img src="Screenshot_2026-06-04-21-34-24-083_com.wepie.ivy-.jpg" alt="訪談大綱" width="300" style="display: block; margin: 0 auto;">
-</section>
-  
-<section id="contact">
-<h2>聯絡我</h2>
-<p>郵箱：lix83817@gmail.com</p>
-<p>電話：17877640902</p>
-</section>
+<!-- About -->
+<div id="about" style="background:var(--white)">
+  <div class="section fade-in">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">關於我</h2>
+    </div>
+    <div class="about-inner stagger">
+      <div class="about-text">
+        <p>李建華（化名），1996年3月23日生於廣西省百色地區奉議縣，現就讀於<strong>華南理工大學電力學院</strong>。</p>
+        <p>筆耕多年，以小說、詩詞為創作重心，同時深耕硬筆書法，並活躍於訪談領域，力求在文字與藝術之間尋找獨特的個人表達。</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">出生地</div>
+            <div class="info-val">廣西·百色·奉議</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">出生年月</div>
+            <div class="info-val">1996年3月23日</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">就讀院校</div>
+            <div class="info-val">華南理工大學</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">所屬學院</div>
+            <div class="info-val">電力學院</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-highlight">
+        <p>「以文會友，以字交心。創作不僅是表達，更是一種對時代的回應——記錄自己所在的時代、所處的土地，以及那些無聲卻深刻的人與事。」</p>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="divider"></div>
+
+<!-- Works -->
+<div id="works" style="background:var(--paper-warm)">
+  <div class="section fade-in">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">代表作品</h2>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="works-grid stagger">
+      <div class="work-category fade-in">
+        <div class="work-cat-label">小說</div>
+        <ul class="work-list">
+          <li>《12.14》<span class="work-year">110年</span></li>
+          <li>《振中路》<span class="work-year">114年</span></li>
+          <li>《裂縫之下——復仇三部曲》<span class="work-year">114年</span></li>
+          <li>《三月三與三角梅》<span class="work-year">115年</span></li>
+          <li>《外翻》<span class="work-year">115年</span></li>
+        </ul>
+      </div>
+      <div class="work-category fade-in">
+        <div class="work-cat-label">詩詞</div>
+        <ul class="work-list">
+          <li>《國旗班》<span class="work-year">107年</span></li>
+          <li>《鷓鴣天·地生中考》<span class="work-year">110年</span></li>
+          <li>《感懷》<span class="work-year">111年</span></li>
+          <li>《三月三懷鄉》<span class="work-year">115年</span></li>
+        </ul>
+      </div>
+      <div class="work-category fade-in">
+        <div class="work-cat-label">創作平臺</div>
+        <ul class="work-list">
+          <li style="flex-direction:column;align-items:flex-start;gap:6px">
+            <span>微信公衆號「振中路7號」</span>
+            <span style="font-size:.78rem;color:var(--ink-faint)">持續更新中，歡迎關注</span>
+          </li>
+        </ul>
+      </div>
+      <div class="work-footnote">
+        <span>📖</span>
+        <span>更多作品詳見微信公衆號 <a href="#">振中路7號</a>，持續更新中</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Timeline -->
+<div id="timeline" style="background:var(--white)">
+  <div class="section fade-in">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">成長履歷</h2>
+    </div>
+    <div class="timeline-track">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">109年 9月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">加入 1901 四人幫</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">110年 5月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">擔任 1901 四人幫幫主</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">111年 7月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">成立中國社會仔革命委員會，並出任中央執行委員會主席</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">113年 7月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">卸任會革中央主席，出任宣傳部部長，並創立《會革中央報》</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">114年 8月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">創立微信公衆號「振中路7號」，正式踏入自媒體創作領域</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">115年 5月</div>
+        <div class="timeline-content">
+          <p class="timeline-text">建立個人官方網站，系統整理創作歷程與個人品牌</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Advantage -->
+<div id="advantage" style="background:var(--paper-warm)">
+  <div class="section fade-in">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">核心優勢</h2>
+    </div>
+    <div class="adv-cards stagger">
+
+      <!-- Card 1: 國文 -->
+      <div class="adv-card fade-in">
+        <div class="adv-img-wrap">
+          <img src="qq_pic_merged_1780321617501.jpg" alt="國文高考成績"
+               onerror="this.style.opacity='.0'">
+          <span class="adv-img-label">高考國文成績單</span>
+        </div>
+        <div class="adv-body">
+          <div class="adv-title">國文水平高超</div>
+          <p class="adv-desc">106年至115年任國文科代表，橫跨國小、國中、高中三時期。國小時期三次滿分；國中時期（120分制）三度突破115分，最高分118.5，破當地20年記錄並保持至今；高中時期（150分制）十度突破130分，高考國文以 <strong>139分</strong> 冠絕全校。</p>
+        </div>
+      </div>
+
+      <!-- Card 2: 書法 -->
+      <div class="adv-card fade-in">
+        <div class="adv-body">
+          <div class="adv-title">硬筆書法精熟</div>
+          <p class="adv-desc">自幼練習，曉暢古帖，創造性融合古人筆法與硬筆特色，形成個人風格。書風柔中帶剛，尤精楷書與行書，常以書法為文學創作增添視覺美感。</p>
+        </div>
+        <div class="adv-img-wrap">
+          <img src="Image_1780322159404_44.jpg" alt="行書作品"
+               onerror="this.style.opacity='.0'">
+          <span class="adv-img-label">行書作品</span>
+        </div>
+      </div>
+
+      <!-- Card 3: 訪談 -->
+      <div class="adv-card fade-in">
+        <div class="adv-img-wrap">
+          <img src="Screenshot_2026-06-04-21-34-24-083_com.wepie.ivy-.jpg" alt="訪談大綱"
+               onerror="this.style.opacity='.0'">
+          <span class="adv-img-label">訪談大綱節錄</span>
+        </div>
+        <div class="adv-body">
+          <div class="adv-title">訪談水平高超</div>
+          <p class="adv-desc">曾任節能減排競賽校賽訪談項目負責人，擅長撰寫訪談大綱及訪談紀要，亦具備臨場發揮的現場訪談能力，善於挖掘受訪者的核心觀點與深層敘事。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Contact -->
+<div id="contact">
+  <div class="section fade-in" style="padding:0;max-width:800px;margin:0 auto;">
+    <div class="section-header" style="padding:100px 40px 0">
+      <span class="section-num">05</span>
+      <h2 class="section-title">聯絡我</h2>
+    </div>
+    <div class="contact-grid" style="padding:0 40px 100px">
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">電子郵件</div>
+          <div class="contact-val"><a href="mailto:lix83817@gmail.com">lix83817@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">聯絡電話</div>
+          <div class="contact-val">17877640902</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📝</div>
+        <div>
+          <div class="contact-label">微信公衆號</div>
+          <div class="contact-val">振中路7號</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏫</div>
+        <div>
+          <div class="contact-label">所在機構</div>
+          <div class="contact-val">華南理工大學·電力學院</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
 <footer>
-© 2026 李建華 | Personal Website
+  © 2026 <span>李建華</span> · Personal Website · All Rights Reserved
 </footer>
+
+<script>
+// Nav scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Intersection Observer for fade-in & timeline
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in, .timeline-item').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
